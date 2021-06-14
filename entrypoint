@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo "starting curatord..."
+
+inotifywait --recursive -m -e close_write /core_dumps | while read path action file; do echo "uploading ${path}${file} to sj://${BUCKET}"; sleep 2; /uplink cp --access $ACCESS $path$file sj://$BUCKET$path$file; done;
